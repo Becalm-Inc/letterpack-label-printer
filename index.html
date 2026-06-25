@@ -7,18 +7,15 @@
 <link rel="icon" href="favicon.ico">
 <title>レターパック 宛名・依頼主ラベル印刷</title>
 <style>
-  /* === 共通スタイル === */
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif; background: #f5f5f5; color: #333; }
+  body { font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; background: #f5f5f5; color: #333; }
 
-  /* === 画面表示用スタイル === */
   @media screen {
-    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    .container { max-width: 820px; margin: 0 auto; padding: 20px; }
     h1 { text-align: center; font-size: 20px; margin-bottom: 8px; }
     .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 24px; }
     .info-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px 16px; margin-bottom: 24px; font-size: 13px; line-height: 1.6; }
     .info-box strong { color: #856404; }
-
     .form-section { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
     .form-section h2 { font-size: 16px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid; }
     .form-section.dest h2 { border-color: #d32f2f; color: #d32f2f; }
@@ -26,22 +23,21 @@
     .form-section.item h2 { border-color: #2e7d32; color: #2e7d32; }
     .form-section.logo h2 { border-color: #e65100; color: #e65100; }
     .form-section.options h2 { border-color: #6a1b9a; color: #6a1b9a; }
-
     .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 10px; }
     .form-row label { width: 80px; font-size: 13px; font-weight: bold; flex-shrink: 0; }
     .form-row input[type="text"] { flex: 1; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; }
     .form-row input[type="text"]:focus { outline: none; border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.15); }
     .form-row .postal-input { max-width: 140px; }
-
     .font-size-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .font-size-row label { width: 80px; font-size: 13px; font-weight: bold; flex-shrink: 0; }
     .font-size-row select { padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
-
+    .radio-row { display: flex; align-items: center; gap: 18px; margin-bottom: 12px; }
+    .radio-row span { font-size: 13px; font-weight: bold; width: 80px; flex-shrink: 0; }
+    .radio-row label { font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .radio-row input[type="radio"] { accent-color: #6a1b9a; }
     .check-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .check-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #6a1b9a; }
     .check-row label { font-size: 14px; cursor: pointer; }
-
-    /* ロゴ関連 */
     .logo-upload-area { margin-bottom: 12px; }
     .logo-upload-area input[type="file"] { font-size: 13px; }
     .logo-size-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -52,7 +48,6 @@
     .logo-thumb-wrapper img { display: block; max-width: 120px; max-height: 80px; object-fit: contain; }
     .logo-thumb-wrapper .logo-remove-btn { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; border: none; background: #d32f2f; color: #fff; font-size: 12px; line-height: 20px; text-align: center; cursor: pointer; padding: 0; }
     .logo-thumb-wrapper .logo-filename { font-size: 10px; color: #888; margin-top: 4px; text-align: center; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
     .btn-row { text-align: center; margin: 24px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .btn { padding: 12px 32px; font-size: 15px; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; transition: background 0.2s; }
     .btn-preview { background: #e3f2fd; color: #1565c0; border: 2px solid #1565c0; }
@@ -61,300 +56,276 @@
     .btn-print:hover { background: #0d47a1; }
     .btn-clear { background: #f5f5f5; color: #999; border: 1px solid #ccc; }
     .btn-clear:hover { background: #eee; color: #666; }
-
     .preview-area { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
     .preview-area h2 { font-size: 16px; margin-bottom: 16px; color: #333; }
     .preview-wrapper { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; align-items: flex-start; }
-
     .print-area { display: none; }
   }
 
-  /* === ラベル共通スタイル === */
-  .label {
-    border: 1px dashed #999;
-    padding: 4mm;
-    position: relative;
-    overflow: hidden;
-    page-break-inside: avoid;
-  }
-  .label .section-title {
-    font-size: 8pt;
-    color: #888;
-    margin-bottom: 1.5mm;
-    font-weight: normal;
-  }
-  .label .postal-code {
-    font-size: 12pt;
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    letter-spacing: 2pt;
-    margin-bottom: 1.5mm;
-    font-weight: bold;
-  }
-  .label .address {
-    margin-bottom: 1.5mm;
-    line-height: 1.4;
-    word-break: break-all;
-  }
-  .label .name {
-    font-weight: bold;
-    margin-bottom: 1mm;
-    line-height: 1.4;
-  }
-  .label .name .suffix {
-    font-size: 80%;
-    font-weight: normal;
-    margin-left: 2mm;
-  }
-  .label .phone {
-    font-size: 8pt;
-    color: #555;
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  }
-
-  /* お届け先ラベルサイズ: 95mm x 55mm */
-  .label-dest {
-    width: 95mm;
-    height: 55mm;
-  }
-  .label-dest .address { font-size: 10pt; }
-  .label-dest .name { font-size: 13pt; }
-
-  /* ご依頼主ラベルサイズ: 95mm x 45mm */
-  .label-sender {
-    width: 95mm;
-    height: 45mm;
-  }
-  .label-sender .address { font-size: 9pt; }
-  .label-sender .name { font-size: 11pt; }
-
-  /* 品名ラベルサイズ: 95mm x 18mm */
-  .label-item {
-    width: 95mm;
-    height: 18mm;
-    display: flex;
-    align-items: center;
-    gap: 3mm;
-  }
-  .label-item .section-title {
-    flex-shrink: 0;
-    margin-bottom: 0;
-  }
-  .label-item .item-name {
-    font-size: 11pt;
-    font-weight: bold;
-    line-height: 1.3;
-    word-break: break-all;
-  }
-
-  /* 返送用ラベル */
-  .label-return { border-style: dashed; }
+  /* ============ 個別ラベル ============ */
+  .label { border: 1px dashed #999; padding: 4mm; position: relative; overflow: hidden; page-break-inside: avoid; }
+  .label .section-title { font-size: 8pt; color: #888; margin-bottom: 1.5mm; }
+  .label .postal-code { font-size: 12pt; font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; letter-spacing: 2pt; margin-bottom: 1.5mm; font-weight: bold; }
+  .label .address { margin-bottom: 1.5mm; line-height: 1.4; word-break: break-all; }
+  .label .name { font-weight: bold; margin-bottom: 1mm; line-height: 1.4; }
+  .label .name .suffix { font-size: 80%; font-weight: normal; margin-left: 2mm; }
+  .label .phone { font-size: 8pt; color: #555; font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+  .label-dest { width: 95mm; height: 55mm; }
+  .label-dest .address { font-size: 10pt; } .label-dest .name { font-size: 13pt; }
+  .label-sender { width: 95mm; height: 45mm; }
+  .label-sender .address { font-size: 9pt; } .label-sender .name { font-size: 11pt; }
+  .label-item { width: 95mm; height: 18mm; display: flex; align-items: center; gap: 3mm; }
+  .label-item .section-title { flex-shrink: 0; margin-bottom: 0; }
+  .label-item .item-name { font-size: 11pt; font-weight: bold; }
   .label-return .section-title { color: #6a1b9a; }
+  .label-logo { width: 95mm; display: flex; align-items: center; justify-content: center; padding: 3mm; }
+  .label-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .label::before,.label::after { content:"✂"; position:absolute; font-size:8pt; color:#bbb; }
+  .label::before { top:0; left:1mm; } .label::after { bottom:0; right:1mm; }
 
-  /* ロゴラベル */
-  .label-logo {
-    width: 95mm;
+  /* ============ 合体ラベル ============ */
+  .cl-wrap { page-break-inside: avoid; position: relative; }
+  .cl-wrap::before,.cl-wrap::after { content:"✂"; position:absolute; font-size:8pt; color:#bbb; z-index:2; }
+  .cl-wrap::before { top:0; left:1mm; } .cl-wrap::after { bottom:0; right:1mm; }
+
+  .combined-label {
+    width: 120mm;
+    border: 1.5pt solid #333;
+    overflow: hidden;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  }
+
+  /* --- セクション行: 左バー + 右コンテンツ --- */
+  .cl-section { display: flex; border-bottom: 1.5pt solid #333; }
+
+  /* --- 左の縦カラーバー --- */
+  .cl-sidebar {
+    width: 26mm;
+    flex-shrink: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3mm;
+    color: #fff;
+    padding: 3mm 1mm;
+    position: relative;
   }
-  .label-logo img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
-  /* 切り取り線の角マーク */
-  .label::before,
-  .label::after {
-    content: "✂";
-    position: absolute;
+  .cl-sidebar-jp {
     font-size: 8pt;
-    color: #bbb;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-weight: bold;
+    letter-spacing: 1pt;
+    margin-bottom: 1mm;
   }
-  .label::before { top: 0; left: 1mm; }
-  .label::after { bottom: 0; right: 1mm; }
+  .cl-sidebar-en {
+    font-size: 20pt;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    line-height: 1;
+  }
+  .cl-sidebar-arrow {
+    font-size: 28pt;
+    line-height: 1;
+    margin-top: 2mm;
+  }
+  .cl-sidebar-dots {
+    font-size: 14pt;
+    letter-spacing: 2pt;
+    line-height: 0.6;
+    margin-bottom: 2mm;
+    opacity: 0.7;
+  }
 
-  /* === プレビュー用（画面表示） === */
-  .preview-label { background: #fafafa; }
+  /* プラス色 */
+  .cl-plus .cl-sidebar-to   { background: #d32f2f; }
+  .cl-plus .cl-sidebar-from { background: #e8a0a0; }
+  .cl-plus .cl-item-bar     { background: #fdf0f0; }
 
-  /* === 印刷用スタイル === */
+  /* ライト色 */
+  .cl-light .cl-sidebar-to   { background: #1565c0; }
+  .cl-light .cl-sidebar-from { background: #a4c4e8; }
+  .cl-light .cl-item-bar     { background: #f0f4fa; }
+
+  /* --- 右のコンテンツエリア --- */
+  .cl-content {
+    flex: 1;
+    padding: 3mm 4mm;
+    position: relative;
+    min-width: 0;
+  }
+  .cl-content-to   { min-height: 52mm; }
+  .cl-content-from { min-height: 40mm; }
+
+  .cl-flabel {
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #333;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height: 1.2;
+    margin-bottom: 0.5mm;
+  }
+  .cl-flabel-en {
+    font-weight: normal;
+    font-size: 6.5pt;
+    color: #666;
+  }
+  /* 点線ボックス（住所・氏名エリア） */
+  .cl-field-box {
+    border: 1.5px dashed #9cc5e8;
+    padding: 1.5mm 2mm;
+    margin-bottom: 2mm;
+    min-height: 8mm;
+  }
+  .cl-plus .cl-field-box { border-color: #e0a0a0; }
+  .cl-light .cl-field-box { border-color: #9cc5e8; }
+
+  .cl-postal {
+    font-size: 11pt;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-weight: bold;
+    letter-spacing: 2pt;
+    margin-bottom: 0.5mm;
+  }
+  .cl-address { line-height: 1.4; word-break: break-all; }
+  .cl-name { font-weight: bold; line-height: 1.4; }
+  .cl-phone {
+    font-size: 8pt;
+    color: #555;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  }
+
+  /* 「様」大文字 右寄せ */
+  .cl-sama {
+    position: absolute;
+    right: 4mm;
+    bottom: 14mm;
+    font-size: 22pt;
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* --- 品名バー（最下部） --- */
+  .cl-item-bar {
+    padding: 2mm 4mm;
+    font-size: 8pt;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    min-height: 10mm;
+  }
+  .cl-item-bar-title {
+    font-weight: bold;
+    font-size: 9pt;
+  }
+  .cl-item-bar-value {
+    font-size: 11pt;
+    font-weight: bold;
+    font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+    margin-left: 2mm;
+  }
+  .cl-item-bar-note {
+    font-size: 6pt;
+    color: #888;
+    margin-top: 0.5mm;
+    line-height: 1.3;
+  }
+
+  /* 返送用バッジ */
+  .cl-return-badge {
+    position: absolute; top: 0; right: 0;
+    background: #6a1b9a; color: #fff;
+    font-size: 7pt; font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    padding: 1mm 3mm; font-weight: bold; z-index: 1;
+  }
+
+  .preview-label,.preview-combined { background: #fafafa; }
+
+  .fs-8{font-size:8pt!important} .fs-9{font-size:9pt!important} .fs-10{font-size:10pt!important}
+  .fs-11{font-size:11pt!important} .fs-12{font-size:12pt!important} .fs-13{font-size:13pt!important}
+  .fs-14{font-size:14pt!important} .fs-15{font-size:15pt!important} .fs-16{font-size:16pt!important}
+
   @media print {
     body { background: #fff; }
     .container { display: none !important; }
-    .print-area {
-      display: block !important;
-      padding: 10mm;
-    }
-    .print-labels-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6mm;
-      align-items: flex-start;
-    }
+    .print-area { display: block !important; padding: 10mm; }
+    .print-labels-wrapper { display: flex; flex-wrap: wrap; gap: 6mm; align-items: flex-start; }
     .label { border: 1px dashed #ccc; }
-    .print-guide {
-      font-size: 8pt;
-      color: #aaa;
-      margin-bottom: 4mm;
-      font-family: sans-serif;
-    }
-
-    @page {
-      size: A4 portrait;
-      margin: 15mm;
-    }
+    .print-guide { font-size: 8pt; color: #aaa; margin-bottom: 4mm; font-family: sans-serif; }
+    @page { size: A4 portrait; margin: 15mm; }
   }
-
-  /* === フォントサイズ調整クラス === */
-  .fs-8 { font-size: 8pt !important; }
-  .fs-9 { font-size: 9pt !important; }
-  .fs-10 { font-size: 10pt !important; }
-  .fs-11 { font-size: 11pt !important; }
-  .fs-12 { font-size: 12pt !important; }
-  .fs-13 { font-size: 13pt !important; }
-  .fs-14 { font-size: 14pt !important; }
-  .fs-15 { font-size: 15pt !important; }
-  .fs-16 { font-size: 16pt !important; }
 </style>
 </head>
 <body>
 
-<!-- ===== 入力フォーム（画面表示用） ===== -->
 <div class="container">
   <h1>レターパック 宛名・依頼主ラベル印刷</h1>
   <p class="subtitle">ラベルを印刷してレターパック（プラス／ライト共通）に貼り付けて使用します</p>
 
   <div class="info-box">
     <strong>使い方:</strong>
-    情報を入力 → 「プレビュー」で確認 → 「印刷」でA4用紙に印刷 → 点線に沿って切り取り → レターパックの該当欄に貼付<br>
-    <strong>ラベルサイズ:</strong> お届け先 95mm×55mm ／ ご依頼主 95mm×45mm ／ 品名 95mm×18mm<br>
+    情報を入力 → 「プレビュー」で確認 → 「印刷」でA4用紙に印刷 → 切り取り → レターパックに貼付<br>
     <strong>印刷設定:</strong> 用紙サイズ「A4」、倍率「100%」（拡大縮小なし）で印刷してください
   </div>
 
-  <!-- お届け先 -->
   <div class="form-section dest">
     <h2>お届け先（宛名）</h2>
-    <div class="form-row">
-      <label>郵便番号</label>
-      <input type="text" id="dest-postal" class="postal-input" placeholder="000-0000" maxlength="8">
-    </div>
-    <div class="form-row">
-      <label>住所1</label>
-      <input type="text" id="dest-addr1" placeholder="都道府県 市区町村 番地">
-    </div>
-    <div class="form-row">
-      <label>住所2</label>
-      <input type="text" id="dest-addr2" placeholder="建物名・部屋番号（任意）">
-    </div>
-    <div class="form-row">
-      <label>氏名</label>
-      <input type="text" id="dest-name" placeholder="山田 太郎">
-    </div>
-    <div class="form-row">
-      <label>敬称</label>
-      <input type="text" id="dest-suffix" placeholder="様" value="様" style="max-width:80px;">
-    </div>
-    <div class="form-row">
-      <label>電話番号</label>
-      <input type="text" id="dest-phone" placeholder="090-0000-0000（任意）">
-    </div>
+    <div class="form-row"><label>郵便番号</label><input type="text" id="dest-postal" class="postal-input" placeholder="000-0000" maxlength="8"></div>
+    <div class="form-row"><label>住所1</label><input type="text" id="dest-addr1" placeholder="都道府県 市区町村 番地"></div>
+    <div class="form-row"><label>住所2</label><input type="text" id="dest-addr2" placeholder="建物名・部屋番号（任意）"></div>
+    <div class="form-row"><label>氏名</label><input type="text" id="dest-name" placeholder="山田 太郎"></div>
+    <div class="form-row"><label>敬称</label><input type="text" id="dest-suffix" placeholder="様" value="様" style="max-width:80px;"></div>
+    <div class="form-row"><label>電話番号</label><input type="text" id="dest-phone" placeholder="090-0000-0000（任意）"></div>
     <div class="font-size-row">
       <label>住所文字</label>
-      <select id="dest-addr-fs">
-        <option value="8">8pt</option>
-        <option value="9">9pt</option>
-        <option value="10" selected>10pt</option>
-        <option value="11">11pt</option>
-        <option value="12">12pt</option>
-      </select>
+      <select id="dest-addr-fs"><option value="8">8pt</option><option value="9">9pt</option><option value="10" selected>10pt</option><option value="11">11pt</option><option value="12">12pt</option></select>
       <label style="width:auto;">氏名文字</label>
-      <select id="dest-name-fs">
-        <option value="11">11pt</option>
-        <option value="12">12pt</option>
-        <option value="13" selected>13pt</option>
-        <option value="14">14pt</option>
-        <option value="15">15pt</option>
-        <option value="16">16pt</option>
-      </select>
+      <select id="dest-name-fs"><option value="11">11pt</option><option value="12">12pt</option><option value="13" selected>13pt</option><option value="14">14pt</option><option value="15">15pt</option><option value="16">16pt</option></select>
     </div>
   </div>
 
-  <!-- ご依頼主 -->
   <div class="form-section sender">
     <h2>ご依頼主</h2>
-    <div class="form-row">
-      <label>郵便番号</label>
-      <input type="text" id="sender-postal" class="postal-input" placeholder="000-0000" maxlength="8">
-    </div>
-    <div class="form-row">
-      <label>住所1</label>
-      <input type="text" id="sender-addr1" placeholder="都道府県 市区町村 番地">
-    </div>
-    <div class="form-row">
-      <label>住所2</label>
-      <input type="text" id="sender-addr2" placeholder="建物名・部屋番号（任意）">
-    </div>
-    <div class="form-row">
-      <label>氏名</label>
-      <input type="text" id="sender-name" placeholder="鈴木 花子">
-    </div>
-    <div class="form-row">
-      <label>電話番号</label>
-      <input type="text" id="sender-phone" placeholder="03-0000-0000（任意）">
-    </div>
+    <div class="form-row"><label>郵便番号</label><input type="text" id="sender-postal" class="postal-input" placeholder="000-0000" maxlength="8"></div>
+    <div class="form-row"><label>住所1</label><input type="text" id="sender-addr1" placeholder="都道府県 市区町村 番地"></div>
+    <div class="form-row"><label>住所2</label><input type="text" id="sender-addr2" placeholder="建物名・部屋番号（任意）"></div>
+    <div class="form-row"><label>氏名</label><input type="text" id="sender-name" placeholder="鈴木 花子"></div>
+    <div class="form-row"><label>電話番号</label><input type="text" id="sender-phone" placeholder="03-0000-0000（任意）"></div>
     <div class="font-size-row">
       <label>住所文字</label>
-      <select id="sender-addr-fs">
-        <option value="8">8pt</option>
-        <option value="9" selected>9pt</option>
-        <option value="10">10pt</option>
-        <option value="11">11pt</option>
-      </select>
+      <select id="sender-addr-fs"><option value="8">8pt</option><option value="9" selected>9pt</option><option value="10">10pt</option><option value="11">11pt</option></select>
       <label style="width:auto;">氏名文字</label>
-      <select id="sender-name-fs">
-        <option value="9">9pt</option>
-        <option value="10">10pt</option>
-        <option value="11" selected>11pt</option>
-        <option value="12">12pt</option>
-        <option value="13">13pt</option>
-        <option value="14">14pt</option>
-      </select>
+      <select id="sender-name-fs"><option value="9">9pt</option><option value="10">10pt</option><option value="11" selected>11pt</option><option value="12">12pt</option><option value="13">13pt</option><option value="14">14pt</option></select>
     </div>
   </div>
 
-  <!-- 品名 -->
   <div class="form-section item">
     <h2>品名</h2>
-    <div class="form-row">
-      <label>品名</label>
-      <input type="text" id="item-name" placeholder="書類、衣類、雑貨 など">
-    </div>
+    <div class="form-row"><label>品名</label><input type="text" id="item-name" placeholder="書類、衣類、雑貨 など"></div>
   </div>
 
-  <!-- オプション -->
   <div class="form-section options">
     <h2>オプション</h2>
+    <div class="radio-row">
+      <span>種類</span>
+      <label><input type="radio" name="pack-type" value="plus" checked> プラス（赤・520円）</label>
+      <label><input type="radio" name="pack-type" value="light"> ライト（青・370円）</label>
+    </div>
+    <div class="radio-row">
+      <span>ラベル形式</span>
+      <label><input type="radio" name="label-mode" value="combined" checked> 合体（TO/From一体型）</label>
+      <label><input type="radio" name="label-mode" value="separate"> 個別（各欄バラ）</label>
+    </div>
     <div class="check-row">
       <input type="checkbox" id="opt-return-label">
-      <label for="opt-return-label">返送用ラベルを印刷する（ご依頼主の情報をお届け先として出力）</label>
+      <label for="opt-return-label">返送用ラベルも印刷する（ご依頼主 → お届け先）</label>
     </div>
   </div>
 
-  <!-- 会社ロゴ -->
   <div class="form-section logo">
     <h2>会社ロゴ印刷（空きスペース活用）</h2>
-    <div class="logo-upload-area">
-      <input type="file" id="logo-input" accept="image/*" multiple>
-    </div>
+    <div class="logo-upload-area"><input type="file" id="logo-input" accept="image/*" multiple></div>
     <div class="logo-size-row">
       <label>ロゴ印刷サイズ:</label>
-      <select id="logo-size">
-        <option value="20">小（20mm高）</option>
-        <option value="30" selected>中（30mm高）</option>
-        <option value="40">大（40mm高）</option>
-        <option value="50">特大（50mm高）</option>
-      </select>
+      <select id="logo-size"><option value="20">小（20mm高）</option><option value="30" selected>中（30mm高）</option><option value="40">大（40mm高）</option><option value="50">特大（50mm高）</option></select>
     </div>
     <div class="logo-preview-grid" id="logo-preview-grid"></div>
   </div>
@@ -365,84 +336,57 @@
     <button class="btn btn-print" onclick="printLabels()">印刷</button>
   </div>
 
-  <!-- プレビュー表示 -->
   <div class="preview-area" id="preview-area" style="display:none;">
     <h2>プレビュー（実寸表示）</h2>
     <div class="preview-wrapper" id="preview-wrapper"></div>
   </div>
 </div>
 
-<!-- ===== 印刷用エリア ===== -->
 <div class="print-area" id="print-area">
-  <div class="print-guide">レターパック宛名ラベル ─ 点線に沿って切り取り、該当欄に貼付してください（印刷倍率100%）</div>
+  <div class="print-guide">レターパック宛名ラベル ─ 切り取って該当欄に貼付してください（印刷倍率100%）</div>
   <div class="print-labels-wrapper" id="print-labels"></div>
 </div>
 
 <script>
-  // ===== ロゴデータ管理 =====
-  let logoDataList = []; // { name, dataUrl }
-
+  let logoDataList = [];
   document.getElementById('logo-input').addEventListener('change', function(e) {
-    const files = Array.from(e.target.files);
-    files.forEach(file => {
+    Array.from(e.target.files).forEach(file => {
       if (!file.type.startsWith('image/')) return;
       const reader = new FileReader();
-      reader.onload = function(ev) {
-        logoDataList.push({ name: file.name, dataUrl: ev.target.result });
-        renderLogoThumbnails();
-      };
+      reader.onload = ev => { logoDataList.push({ name: file.name, dataUrl: ev.target.result }); renderLogoThumbnails(); };
       reader.readAsDataURL(file);
     });
     this.value = '';
   });
-
   function renderLogoThumbnails() {
-    const grid = document.getElementById('logo-preview-grid');
-    grid.innerHTML = logoDataList.map((logo, i) => `
-      <div class="logo-thumb-wrapper">
-        <button class="logo-remove-btn" onclick="removeLogo(${i})">×</button>
-        <img src="${logo.dataUrl}" alt="${logo.name}">
-        <div class="logo-filename">${logo.name}</div>
-      </div>
-    `).join('');
+    document.getElementById('logo-preview-grid').innerHTML = logoDataList.map((l,i) =>
+      `<div class="logo-thumb-wrapper"><button class="logo-remove-btn" onclick="removeLogo(${i})">×</button><img src="${l.dataUrl}" alt="${l.name}"><div class="logo-filename">${l.name}</div></div>`
+    ).join('');
   }
+  function removeLogo(i) { logoDataList.splice(i,1); renderLogoThumbnails(); }
 
-  function removeLogo(index) {
-    logoDataList.splice(index, 1);
-    renderLogoThumbnails();
-  }
-
-  // ===== 郵便番号フォーマット =====
   document.querySelectorAll('.postal-input').forEach(input => {
     input.addEventListener('input', function() {
-      let v = this.value.replace(/[^0-9]/g, '');
-      if (v.length > 3) v = v.slice(0, 3) + '-' + v.slice(3, 7);
+      let v = this.value.replace(/[^0-9]/g,'');
+      if (v.length > 3) v = v.slice(0,3)+'-'+v.slice(3,7);
       this.value = v;
     });
-  });
-
-  // ===== 郵便番号から住所自動入力 =====
-  document.querySelectorAll('.postal-input').forEach(input => {
     input.addEventListener('blur', function() {
-      const postal = this.value.replace('-', '');
-      if (postal.length !== 7) return;
-      const prefix = this.id.replace('-postal', '');
-      fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postal}`)
-        .then(r => r.json())
-        .then(data => {
+      const p = this.value.replace('-','');
+      if (p.length !== 7) return;
+      const prefix = this.id.replace('-postal','');
+      fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${p}`)
+        .then(r=>r.json()).then(data => {
           if (data.results && data.results[0]) {
-            const r = data.results[0];
-            const addr1Input = document.getElementById(`${prefix}-addr1`);
-            if (!addr1Input.value) {
-              addr1Input.value = r.address1 + r.address2 + r.address3;
-            }
+            const r = data.results[0], el = document.getElementById(`${prefix}-addr1`);
+            if (!el.value) el.value = r.address1+r.address2+r.address3;
           }
-        })
-        .catch(() => {});
+        }).catch(()=>{});
     });
   });
 
-  // ===== フォームデータ取得 =====
+  function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
   function getFormData() {
     return {
       dest: {
@@ -465,173 +409,162 @@
         nameFs: document.getElementById('sender-name-fs').value,
       },
       itemName: document.getElementById('item-name').value,
+      packType: document.querySelector('input[name="pack-type"]:checked').value,
+      mode: document.querySelector('input[name="label-mode"]:checked').value,
       returnLabel: document.getElementById('opt-return-label').checked,
       logoSize: document.getElementById('logo-size').value,
     };
   }
 
-  // ===== ラベルHTML生成 =====
-  function buildLabelHTML(type, data, titleOverride) {
-    const isDest = type === 'dest';
-    const labelClass = isDest ? 'label-dest' : 'label-sender';
+  /* ===== 合体ラベル ===== */
+  function buildCombinedHTML(data, isReturn) {
+    const dest = isReturn
+      ? { ...data.sender, suffix:'行', addrFs:data.dest.addrFs, nameFs:data.dest.nameFs }
+      : data.dest;
+    const sender = isReturn ? null : data.sender;
+    const hasDest = dest.name || dest.addr1;
+    const hasSender = sender && (sender.name || sender.addr1);
+    if (!hasDest && !hasSender) return '';
+
+    const cc = data.packType === 'light' ? 'cl-light' : 'cl-plus';
+    let h = `<div class="cl-wrap ${cc} preview-combined">`;
+    if (isReturn) h += `<div class="cl-return-badge">返送用</div>`;
+    h += `<div class="combined-label">`;
+
+    /* --- To section --- */
+    if (hasDest) {
+      h += `<div class="cl-section">`;
+      h += `<div class="cl-sidebar cl-sidebar-to">
+        <span class="cl-sidebar-jp">お届け先</span>
+        <span class="cl-sidebar-en">To</span>
+        <span class="cl-sidebar-arrow">&#x2191;</span>
+      </div>`;
+      h += `<div class="cl-content cl-content-to">`;
+      h += `<div class="cl-flabel">おところ：<span class="cl-flabel-en">Address</span></div>`;
+      h += `<div class="cl-field-box">`;
+      if (dest.postal) h += `<div class="cl-postal">〒${esc(dest.postal)}</div>`;
+      if (dest.addr1) h += `<div class="cl-address fs-${dest.addrFs}">${esc(dest.addr1)}</div>`;
+      if (dest.addr2) h += `<div class="cl-address fs-${dest.addrFs}">${esc(dest.addr2)}</div>`;
+      h += `</div>`;
+      h += `<div class="cl-flabel">おなまえ：<span class="cl-flabel-en">Name</span></div>`;
+      h += `<div class="cl-field-box">`;
+      if (dest.name) h += `<div class="cl-name fs-${dest.nameFs}">${esc(dest.name)}</div>`;
+      h += `</div>`;
+      h += `<div class="cl-flabel">電話番号：<span class="cl-flabel-en">Telephone Number</span></div>`;
+      if (dest.phone) h += `<div class="cl-phone">${esc(dest.phone)}</div>`;
+      if (dest.suffix) h += `<div class="cl-sama">${esc(dest.suffix)}</div>`;
+      h += `</div></div>`;
+    }
+
+    /* --- From section --- */
+    if (hasSender) {
+      h += `<div class="cl-section">`;
+      h += `<div class="cl-sidebar cl-sidebar-from">
+        <span class="cl-sidebar-dots">&#x250A;<br>&#x250A;<br>&#x250A;</span>
+        <span class="cl-sidebar-jp">ご依頼主</span>
+        <span class="cl-sidebar-en">From</span>
+      </div>`;
+      h += `<div class="cl-content cl-content-from">`;
+      h += `<div class="cl-flabel">おところ：<span class="cl-flabel-en">Address</span></div>`;
+      h += `<div class="cl-field-box">`;
+      if (sender.postal) h += `<div class="cl-postal">〒${esc(sender.postal)}</div>`;
+      if (sender.addr1) h += `<div class="cl-address fs-${sender.addrFs}">${esc(sender.addr1)}</div>`;
+      if (sender.addr2) h += `<div class="cl-address fs-${sender.addrFs}">${esc(sender.addr2)}</div>`;
+      h += `</div>`;
+      h += `<div class="cl-flabel">おなまえ：<span class="cl-flabel-en">Name</span></div>`;
+      h += `<div class="cl-field-box">`;
+      if (sender.name) h += `<div class="cl-name fs-${sender.nameFs}">${esc(sender.name)}</div>`;
+      h += `</div>`;
+      h += `<div class="cl-flabel">電話番号：<span class="cl-flabel-en">Telephone Number</span></div>`;
+      if (sender.phone) h += `<div class="cl-phone">${esc(sender.phone)}</div>`;
+      h += `</div></div>`;
+    }
+
+    /* --- 品名バー（最下部） --- */
+    if (!isReturn) {
+      h += `<div class="cl-item-bar">`;
+      h += `<div><span class="cl-item-bar-title">品名：Contents Description</span>`;
+      if (data.itemName) h += `<span class="cl-item-bar-value">${esc(data.itemName)}</span>`;
+      h += `</div>`;
+      h += `<div class="cl-item-bar-note">現金を送ることはできません。Cannot be used to send cash.</div>`;
+      h += `</div>`;
+    }
+
+    h += `</div></div>`; // combined-label, cl-wrap
+    return h;
+  }
+
+  /* ===== 個別ラベル ===== */
+  function buildSeparateLabelHTML(type, data, titleOverride) {
+    const isDest = type==='dest';
+    const cls = isDest ? 'label-dest' : 'label-sender';
     const title = titleOverride || (isDest ? 'お届け先' : 'ご依頼主');
-    const extraClass = titleOverride ? ' label-return' : '';
-
-    const postalHTML = data.postal
-      ? `<div class="postal-code">〒${data.postal}</div>` : '';
-    const addr1HTML = data.addr1
-      ? `<div class="address fs-${data.addrFs}">${escapeHTML(data.addr1)}</div>` : '';
-    const addr2HTML = data.addr2
-      ? `<div class="address fs-${data.addrFs}">${escapeHTML(data.addr2)}</div>` : '';
-    const suffixHTML = isDest && data.suffix
-      ? `<span class="suffix">${escapeHTML(data.suffix)}</span>` : '';
-    const nameHTML = data.name
-      ? `<div class="name fs-${data.nameFs}">${escapeHTML(data.name)}${suffixHTML}</div>` : '';
-    const phoneHTML = data.phone
-      ? `<div class="phone">TEL: ${escapeHTML(data.phone)}</div>` : '';
-
-    return `
-      <div class="label ${labelClass}${extraClass} preview-label">
-        <div class="section-title">${title}</div>
-        ${postalHTML}${addr1HTML}${addr2HTML}${nameHTML}${phoneHTML}
-      </div>`;
+    const extra = titleOverride ? ' label-return' : '';
+    return `<div class="label ${cls}${extra} preview-label">
+      <div class="section-title">${title}</div>
+      ${data.postal ? `<div class="postal-code">〒${esc(data.postal)}</div>` : ''}
+      ${data.addr1 ? `<div class="address fs-${data.addrFs}">${esc(data.addr1)}</div>` : ''}
+      ${data.addr2 ? `<div class="address fs-${data.addrFs}">${esc(data.addr2)}</div>` : ''}
+      ${data.name ? `<div class="name fs-${data.nameFs}">${esc(data.name)}${isDest&&data.suffix?`<span class="suffix">${esc(data.suffix)}</span>`:''}</div>` : ''}
+      ${data.phone ? `<div class="phone">TEL: ${esc(data.phone)}</div>` : ''}
+    </div>`;
   }
+  function buildItemLabelHTML(v) { return `<div class="label label-item preview-label"><div class="section-title">品名</div><div class="item-name">${esc(v)}</div></div>`; }
+  function buildLogoLabelHTML(l,h) { return `<div class="label label-logo preview-label" style="height:${h}mm;"><img src="${l.dataUrl}" alt="${esc(l.name)}"></div>`; }
 
-  function buildItemLabelHTML(itemName) {
-    return `
-      <div class="label label-item preview-label">
-        <div class="section-title">品名</div>
-        <div class="item-name">${escapeHTML(itemName)}</div>
-      </div>`;
-  }
-
-  function buildLogoLabelHTML(logo, heightMm) {
-    return `
-      <div class="label label-logo preview-label" style="height:${heightMm}mm;">
-        <img src="${logo.dataUrl}" alt="${escapeHTML(logo.name)}">
-      </div>`;
-  }
-
-  function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  // ===== 全ラベルHTML構築 =====
-  function buildAllLabelsHTML(data) {
+  function buildAllHTML(data) {
     let html = '';
-
-    if (data.dest.name || data.dest.addr1) {
-      html += buildLabelHTML('dest', data.dest);
+    if (data.mode === 'combined') {
+      html += buildCombinedHTML(data, false);
+      if (data.returnLabel && (data.sender.name || data.sender.addr1))
+        html += buildCombinedHTML(data, true);
+    } else {
+      if (data.dest.name||data.dest.addr1) html += buildSeparateLabelHTML('dest',data.dest);
+      if (data.sender.name||data.sender.addr1) html += buildSeparateLabelHTML('sender',data.sender);
+      if (data.itemName) html += buildItemLabelHTML(data.itemName);
+      if (data.returnLabel && (data.sender.name||data.sender.addr1))
+        html += buildSeparateLabelHTML('dest',{...data.sender,suffix:'行',addrFs:data.dest.addrFs,nameFs:data.dest.nameFs},'返送用 お届け先');
     }
-    if (data.sender.name || data.sender.addr1) {
-      html += buildLabelHTML('sender', data.sender);
-    }
-    if (data.itemName) {
-      html += buildItemLabelHTML(data.itemName);
-    }
-
-    // 返送用ラベル（ご依頼主 → お届け先）
-    if (data.returnLabel && (data.sender.name || data.sender.addr1)) {
-      const returnDest = {
-        postal: data.sender.postal,
-        addr1: data.sender.addr1,
-        addr2: data.sender.addr2,
-        name: data.sender.name,
-        suffix: '行',
-        phone: data.sender.phone,
-        addrFs: data.dest.addrFs,
-        nameFs: data.dest.nameFs,
-      };
-      html += buildLabelHTML('dest', returnDest, '返送用 お届け先');
-    }
-
-    // ロゴ
-    logoDataList.forEach(logo => {
-      html += buildLogoLabelHTML(logo, data.logoSize);
-    });
-
+    logoDataList.forEach(l => { html += buildLogoLabelHTML(l, data.logoSize); });
     return html;
   }
 
-  // ===== プレビュー =====
   function updatePreview() {
-    const data = getFormData();
-    const html = buildAllLabelsHTML(data);
-
-    const previewArea = document.getElementById('preview-area');
-    const previewWrapper = document.getElementById('preview-wrapper');
-
-    if (html) {
-      previewWrapper.innerHTML = html;
-      previewArea.style.display = 'block';
-    } else {
-      previewArea.style.display = 'none';
-      alert('いずれかの情報を入力してください');
-    }
+    const html = buildAllHTML(getFormData());
+    const area = document.getElementById('preview-area');
+    if (html) { document.getElementById('preview-wrapper').innerHTML = html; area.style.display = 'block'; }
+    else { area.style.display = 'none'; alert('いずれかの情報を入力してください'); }
   }
 
-  // ===== 印刷 =====
   function printLabels() {
-    const data = getFormData();
-    const html = buildAllLabelsHTML(data);
-
-    if (!html) {
-      alert('いずれかの情報を入力してください');
-      return;
-    }
-
-    const printContainer = document.getElementById('print-labels');
-    printContainer.innerHTML = html;
-    printContainer.querySelectorAll('.preview-label').forEach(el => {
-      el.classList.remove('preview-label');
-    });
-
+    const html = buildAllHTML(getFormData());
+    if (!html) { alert('いずれかの情報を入力してください'); return; }
+    const el = document.getElementById('print-labels');
+    el.innerHTML = html;
+    el.querySelectorAll('.preview-label,.preview-combined').forEach(e => e.classList.remove('preview-label','preview-combined'));
     setTimeout(() => window.print(), 100);
   }
 
-  // ===== クリア =====
   function clearForm() {
-    document.querySelectorAll('input[type="text"]').forEach(input => {
-      if (input.id === 'dest-suffix') {
-        input.value = '様';
-      } else {
-        input.value = '';
-      }
-    });
+    document.querySelectorAll('input[type="text"]').forEach(i => { i.value = i.id==='dest-suffix' ? '様' : ''; });
     document.getElementById('opt-return-label').checked = false;
     document.getElementById('preview-area').style.display = 'none';
   }
 
-  // ===== localStorage: 依頼主情報の保存/復元 =====
   function saveSenderToStorage() {
-    const sender = {
-      postal: document.getElementById('sender-postal').value,
-      addr1: document.getElementById('sender-addr1').value,
-      addr2: document.getElementById('sender-addr2').value,
-      name: document.getElementById('sender-name').value,
-      phone: document.getElementById('sender-phone').value,
-    };
-    localStorage.setItem('letterpack-sender', JSON.stringify(sender));
+    const o = {};
+    ['postal','addr1','addr2','name','phone'].forEach(f => { o[f] = document.getElementById('sender-'+f).value; });
+    localStorage.setItem('letterpack-sender', JSON.stringify(o));
   }
-
   function loadSenderFromStorage() {
-    const saved = localStorage.getItem('letterpack-sender');
-    if (saved) {
-      const sender = JSON.parse(saved);
-      document.getElementById('sender-postal').value = sender.postal || '';
-      document.getElementById('sender-addr1').value = sender.addr1 || '';
-      document.getElementById('sender-addr2').value = sender.addr2 || '';
-      document.getElementById('sender-name').value = sender.name || '';
-      document.getElementById('sender-phone').value = sender.phone || '';
-    }
+    const s = localStorage.getItem('letterpack-sender');
+    if (!s) return;
+    const o = JSON.parse(s);
+    Object.keys(o).forEach(f => { const el=document.getElementById('sender-'+f); if(el) el.value=o[f]||''; });
   }
-
-  ['sender-postal', 'sender-addr1', 'sender-addr2', 'sender-name', 'sender-phone'].forEach(id => {
+  ['sender-postal','sender-addr1','sender-addr2','sender-name','sender-phone'].forEach(id => {
     document.getElementById(id).addEventListener('change', saveSenderToStorage);
   });
-
   loadSenderFromStorage();
 </script>
 </body>
