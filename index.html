@@ -217,10 +217,12 @@
     font-size: 9pt;
   }
   .cl-item-bar-value {
-    font-size: 11pt;
+    display: block;
+    font-size: 18pt;
     font-weight: bold;
+    color: #d32f2f;
     font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
-    margin-left: 2mm;
+    margin-top: 1mm;
   }
   .cl-item-bar-note {
     font-size: 6pt;
@@ -484,7 +486,7 @@
     if (!isReturn) {
       h += `<div class="cl-item-bar">`;
       h += `<div><span class="cl-item-bar-title">品名：Contents Description</span>`;
-      if (data.itemName) h += `<span class="cl-item-bar-value">${esc(data.itemName)}</span>`;
+      if (data.itemName) h += `<div class="cl-item-bar-value">${esc(data.itemName)}</div>`;
       h += `</div>`;
       h += `<div class="cl-item-bar-note">現金を送ることはできません。Cannot be used to send cash.</div>`;
       h += `</div>`;
