@@ -66,6 +66,10 @@
     .preview-area { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
     .preview-area h2 { font-size: 16px; margin-bottom: 16px; color: #333; }
     .preview-wrapper { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; align-items: flex-start; }
+    .banner-link { display: block; margin-bottom: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: box-shadow 0.2s; }
+    .banner-link:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+    .banner-img { display: block; width: 100%; height: auto; }
+
     .print-area { display: none; }
   }
 
@@ -344,6 +348,8 @@
     </div>
     <div class="logo-preview-grid" id="logo-preview-grid"></div>
   </div>
+
+  <a href="https://corp.becalm.jp" target="_blank" rel="noopener" class="banner-link"><img src="banner.webp" alt="Becalm - 最短・最適・低価格でホームページをサクッと作成" class="banner-img"></a>
 
   <div class="btn-row">
     <button class="btn btn-clear" onclick="clearForm()">クリア</button>
