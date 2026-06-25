@@ -10,9 +10,72 @@
 <meta property="og:description" content="レターパックの宛名ラベルを無料で作成・印刷。お届け先・ご依頼主・品名をまとめて印刷できます。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://becalm-inc.github.io/letterpack-label-printer/">
+<meta property="og:image" content="https://becalm-inc.github.io/letterpack-label-printer/banner.webp">
+<meta property="og:site_name" content="レターパック宛名印刷ツール">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="レターパック 宛名・依頼主ラベル印刷 | 無料ツール">
+<meta name="twitter:description" content="レターパックの宛名ラベルを無料で作成・印刷。お届け先・ご依頼主・品名をまとめて印刷できます。">
+<meta name="twitter:image" content="https://becalm-inc.github.io/letterpack-label-printer/banner.webp">
+<meta name="author" content="株式会社Becalm">
+<meta name="theme-color" content="#1565c0">
 <link rel="canonical" href="https://becalm-inc.github.io/letterpack-label-printer/">
 <link rel="icon" href="favicon.ico">
 <title>レターパック 宛名・依頼主ラベル印刷 | 無料で簡単作成・印刷ツール</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "レターパック 宛名・依頼主ラベル印刷ツール",
+  "description": "レターパックプラス・ライトの宛名ラベルを無料で作成・印刷できるWebツール。お届け先・ご依頼主・品名を入力してA4用紙に印刷、切り取って貼るだけ。返送用ラベルや会社ロゴも一緒に印刷可能。",
+  "url": "https://becalm-inc.github.io/letterpack-label-printer/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "株式会社Becalm",
+    "url": "https://corp.becalm.jp"
+  },
+  "inLanguage": "ja"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "レターパックの宛名ラベルはどうやって印刷しますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "お届け先・ご依頼主・品名の情報を入力し、A4用紙に倍率100%で印刷します。印刷後、切り取り線に沿って切り取り、レターパックの該当欄に貼り付けてください。レターパックプラス（赤・520円）とレターパックライト（青・370円）の両方に対応しています。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "レターパックプラスとライトの違いは何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "レターパックプラス（520円）は対面配達で厚さ制限なし、レターパックライト（370円）は郵便受け配達で厚さ3cmまでです。本ツールではどちらにも対応したラベルを作成できます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "返送用ラベルも作れますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。オプションで「返送用ラベルも印刷する」にチェックを入れると、ご依頼主の情報をお届け先として出力した返送用ラベルを一緒に印刷できます。"
+      }
+    }
+  ]
+}
+</script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; background: #f5f5f5; color: #333; }
@@ -69,6 +132,17 @@
     .banner-link { display: block; margin-bottom: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: box-shadow 0.2s; }
     .banner-link:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
     .banner-img { display: block; width: 100%; height: auto; }
+
+    .seo-content { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-size: 14px; line-height: 1.8; color: #555; }
+    .seo-content h2 { font-size: 17px; color: #333; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #1565c0; }
+    .seo-content h3 { font-size: 15px; color: #444; margin: 14px 0 6px; }
+    .seo-content p { margin-bottom: 10px; }
+    .seo-content ul { margin: 6px 0 10px 20px; }
+    .seo-content li { margin-bottom: 4px; }
+
+    .site-footer { text-align: center; padding: 20px; font-size: 12px; color: #999; }
+    .site-footer a { color: #1565c0; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
 
     .print-area { display: none; }
   }
@@ -361,6 +435,31 @@
     <h2>プレビュー（実寸表示）</h2>
     <div class="preview-wrapper" id="preview-wrapper"></div>
   </div>
+
+  <article class="seo-content">
+    <h2>レターパック宛名印刷ツールの特徴</h2>
+    <p>本ツールは、日本郵便のレターパックプラス（520円）・レターパックライト（370円）に対応した宛名ラベルを、ブラウザ上で無料で作成・印刷できるWebアプリケーションです。会員登録やソフトウェアのインストールは不要で、すぐにお使いいただけます。</p>
+
+    <h3>主な機能</h3>
+    <ul>
+      <li><strong>合体ラベル印刷</strong> - お届け先（To）・ご依頼主（From）・品名を1枚にまとめた、レターパック実物デザイン準拠のラベルを作成</li>
+      <li><strong>個別ラベル印刷</strong> - お届け先・ご依頼主・品名を個別のラベルとして作成</li>
+      <li><strong>返送用ラベル</strong> - ご依頼主の情報をお届け先に変換した返送用ラベルを同時に印刷</li>
+      <li><strong>会社ロゴ印刷</strong> - A4用紙の空きスペースに会社ロゴを複数パターン印刷可能</li>
+      <li><strong>郵便番号から住所自動入力</strong> - 郵便番号を入力するだけで住所を自動補完</li>
+      <li><strong>依頼主情報の自動保存</strong> - 次回利用時もご依頼主の情報が自動で復元されます</li>
+    </ul>
+
+    <h3>使い方</h3>
+    <p>お届け先・ご依頼主の郵便番号・住所・氏名・電話番号を入力し、品名を記入します。レターパックの種類（プラス／ライト）を選び、「プレビュー」で確認後、「印刷」ボタンでA4用紙に印刷してください。印刷時は必ず倍率100%（実際のサイズ）で印刷し、切り取り線に沿ってカットしてレターパックの該当欄に貼り付けてください。</p>
+
+    <h3>レターパックプラスとレターパックライトの違い</h3>
+    <p>レターパックプラス（520円・赤）は対面での配達で、厚さの制限がなく、集荷も依頼できます。レターパックライト（370円・青）は郵便受けへの配達で、厚さ3cm以内の制限があります。どちらもA4サイズ（340mm×248mm）・4kgまでで、追跡サービス付きです。</p>
+  </article>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 <a href="https://corp.becalm.jp" target="_blank" rel="noopener">株式会社Becalm</a></p>
+  </footer>
 </div>
 
 <div class="print-area" id="print-area">
